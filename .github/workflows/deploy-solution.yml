@@ -1,5 +1,5 @@
-name: deployment
-run-name: Deployment
+name: deploy-solution
+run-name: Deploy Solution
 on:
   push:
     branches:
