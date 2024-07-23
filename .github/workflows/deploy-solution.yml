@@ -1,0 +1,47 @@
+name: deployment
+run-name: Deployment
+on:
+  push:
+    branches:
+      - main
+  workflow_call:
+    inputs:
+      solution_name:
+        description: 'Solution Name'
+        default: 'cba.ceba.bot'
+        required: false
+        type: string
+      branch_name:
+        description: 'Branch Name to package and deploy'
+        default: 'main'
+        required: false
+        type: string
+      release_tag_name:
+        description: 'Release Tag Name'
+        default: 'deault_tag'
+        required: false
+        type: string
+      target_alm_env:
+        description: 'Target ALM Environment'
+        required: true
+        type: string
+      target_alm_env_type:
+        description: 'Target ALM Environment Type'
+        required: true
+        type: string
+env:
+  SERVER: non_production
+ 
+defaults:
+  run:
+    shell: bash
+    working-directory: ./scripts
+jobs:
+  checkout_code_and_branch:
+    runs-on: default
+    steps:
+        - uses: actions/checkout@v3
+        - name: Run shell commands
+          run: |
+            git config --global url.https://github.com/.insteadOf git://github.com/
+            git clone https://github.com/githubtraining/hellogitworld.git
